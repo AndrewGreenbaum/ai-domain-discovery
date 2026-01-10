@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "updated_at": "2025-12-15T21:21:35.588499",
+  "base_score_adjustment": 0,
+  "category_adjustments": {
+    "REAL_STARTUP": 0,
+    "FOR_SALE": 0,
+    "PARKING": 0,
+    "REDIRECT": 0,
+    "ESTABLISHED": 0,
+    "COMING_SOON": 0
+  }
+}
