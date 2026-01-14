@@ -1,0 +1,201 @@
+{
+  "description": "Labeled training dataset for agent validation and scoring",
+  "version": "1.0",
+  "last_updated": "2025-11-23",
+  "categories": {
+    "REAL_STARTUP": "Legitimate new AI startup launching",
+    "ESTABLISHED_COMPANY": "Established company (>3 years) using .ai domain",
+    "REDIRECT": "Domain redirects to another established site",
+    "FOR_SALE": "Domain listed on marketplace for sale",
+    "PARKING": "Parking page with no real content",
+    "COMING_SOON": "Legitimate pre-launch startup page"
+  },
+  "training_examples": [
+    {
+      "domain": "agent.ai",
+      "ground_truth": "REAL_STARTUP",
+      "description": "AI agent platform, active product",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": false,
+        "is_redirect": false
+      },
+      "expected_score_range": [80, 100],
+      "notes": "Should score high - real active startup"
+    },
+    {
+      "domain": "chatbot.ai",
+      "ground_truth": "REAL_STARTUP",
+      "description": "Chatbot platform with real content",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": false,
+        "is_redirect": false
+      },
+      "expected_score_range": [80, 100],
+      "notes": "Active chatbot service"
+    },
+    {
+      "domain": "botbot.ai",
+      "ground_truth": "FOR_SALE",
+      "description": "Porkbun Marketplace listing",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": true,
+        "is_redirect": false
+      },
+      "expected_score_range": [0, 35],
+      "notes": "Should be flagged as FOR SALE and capped at 35/100",
+      "keywords_to_detect": ["porkbun", "marketplace", "for sale"]
+    },
+    {
+      "domain": "auto.ai",
+      "ground_truth": "FOR_SALE",
+      "description": "Domain name for sale page",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": true,
+        "is_redirect": false
+      },
+      "expected_score_range": [0, 60],
+      "notes": "Explicit for-sale page",
+      "keywords_to_detect": ["for sale", "domain name"]
+    },
+    {
+      "domain": "autoai.ai",
+      "ground_truth": "REDIRECT",
+      "description": "Redirects to H2O.ai (established 2012)",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": false,
+        "is_redirect": true
+      },
+      "expected_score_range": [0, 20],
+      "notes": "Should get redirect penalty - caps at 20/100",
+      "redirect_target": "h2o.ai"
+    },
+    {
+      "domain": "gen.ai",
+      "ground_truth": "ESTABLISHED_COMPANY",
+      "description": "Owned by Picsart (founded 2011)",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": false,
+        "is_redirect": false
+      },
+      "expected_score_range": [0, 20],
+      "notes": "Should detect parent company and apply penalty",
+      "parent_company": "Picsart",
+      "company_age_years": 14
+    },
+    {
+      "domain": "smartapp.ai",
+      "ground_truth": "PARKING",
+      "description": "Generic parking page",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": true,
+        "is_for_sale": false,
+        "is_redirect": false
+      },
+      "expected_score_range": [0, 35],
+      "notes": "Should be flagged as parking and capped at 35/100",
+      "keywords_to_detect": ["future home", "coming soon"]
+    },
+    {
+      "domain": "genai.ai",
+      "ground_truth": "FOR_SALE",
+      "description": "For sale page",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": true,
+        "is_redirect": false
+      },
+      "expected_score_range": [0, 60],
+      "notes": "Explicit for-sale listing"
+    },
+    {
+      "domain": "deep.ai",
+      "ground_truth": "REAL_STARTUP",
+      "description": "AI tool platform with real product",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": false,
+        "is_redirect": false
+      },
+      "expected_score_range": [80, 100],
+      "notes": "Active AI platform with multiple tools"
+    },
+    {
+      "domain": "assistantai.ai",
+      "ground_truth": "FOR_SALE",
+      "description": "Domain for sale",
+      "expected_validation": {
+        "is_live": true,
+        "is_parking": false,
+        "is_for_sale": true,
+        "is_redirect": false
+      },
+      "expected_score_range": [0, 35],
+      "notes": "Should detect as for-sale and cap at 35/100"
+    }
+  ],
+  "test_scenarios": {
+    "parking_detection": {
+      "true_positives": ["smartapp.ai"],
+      "true_negatives": ["agent.ai", "chatbot.ai", "deep.ai"],
+      "min_accuracy": 0.90
+    },
+    "for_sale_detection": {
+      "true_positives": ["botbot.ai", "auto.ai", "genai.ai", "assistantai.ai"],
+      "true_negatives": ["agent.ai", "chatbot.ai", "deep.ai"],
+      "min_accuracy": 0.95
+    },
+    "redirect_detection": {
+      "true_positives": ["autoai.ai"],
+      "true_negatives": ["agent.ai", "botbot.ai"],
+      "min_accuracy": 0.98
+    },
+    "scoring_accuracy": {
+      "high_quality_startups": {
+        "domains": ["agent.ai", "chatbot.ai", "deep.ai"],
+        "expected_min_score": 80
+      },
+      "for_sale_domains": {
+        "domains": ["botbot.ai", "auto.ai", "genai.ai"],
+        "expected_max_score": 60
+      },
+      "redirects": {
+        "domains": ["autoai.ai"],
+        "expected_max_score": 20
+      }
+    }
+  },
+  "performance_benchmarks": {
+    "target_accuracy": {
+      "parking_detection": 0.90,
+      "for_sale_detection": 0.95,
+      "redirect_detection": 0.98,
+      "parent_company_detection": 0.85,
+      "overall_classification": 0.90
+    },
+    "target_precision": {
+      "real_startup": 0.95,
+      "for_sale": 0.98,
+      "parking": 0.90
+    },
+    "target_recall": {
+      "real_startup": 0.90,
+      "for_sale": 0.95,
+      "parking": 0.85
+    }
+  }
+}
