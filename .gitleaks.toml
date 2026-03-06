@@ -1,0 +1,9 @@
+title = "ai-domain-discovery secret scanning config"
+
+[allowlist]
+description = "Allow placeholder examples only"
+regexes = [
+  '''<SET_IN_ENV>''',
+  '''sk-ant-\.\.\.''',
+  '''sk-\.\.\.'''
+]
