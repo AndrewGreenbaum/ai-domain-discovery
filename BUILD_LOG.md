@@ -1,13 +1,16 @@
-# Build Log
+# Build Log (AI Domain Discovery)
 
-## v1
-Set up baseline project structure and first runnable workflow.
+## Iteration 1
+Established backend structure, core models, and first discovery/validation flow.
 
-## v2
-Hardened operational docs, removed sensitive patterns, and standardized environment placeholders.
+## Iteration 2
+Added scheduler and API endpoints for querying run outputs and status.
 
-## v3
-Added security controls: CI secret scanning, pre-commit scanning, and security policy docs.
+## Iteration 3
+Improved filtering/scoring behavior to reduce parked/for-sale noise.
 
-## v4
-Added interview-focused artifacts (`DECISIONS.md`, `KNOWN_LIMITATIONS.md`, `DEMO.md`) to show reasoning and tradeoffs.
+## Iteration 4
+Hardened security posture: removed sensitive docs content, added CI/pre-commit secret scanning, rewrote history to purge leaked material.
+
+## Iteration 5
+Refined employer-facing docs with architecture/tradeoff narrative and runnable demo path.

@@ -1,21 +1,21 @@
-# Engineering Decisions
+# Engineering Decisions (AI Domain Discovery)
 
-## 1) Keep config in environment variables
-I chose env-based config so deployments remain portable across local, CI, and cloud runtimes.
-Tradeoff: setup is stricter and requires reliable secret management.
+## 1) Stage-gated pipeline (discovery -> validation -> scoring)
+I split the flow so each stage can fail independently and be debugged quickly.
+Tradeoff: more orchestration code.
 
-## 2) Prefer small, composable services over one large module
-I optimized for easier debugging and safer refactors.
-Tradeoff: more files and explicit wiring.
+## 2) Rule-first quality filtering before expensive analysis
+I use deterministic checks early to reduce junk domains and control runtime/cost.
+Tradeoff: edge startups can be filtered out too aggressively.
 
-## 3) Add blocking secret scanning in CI
-I treat secret leaks as release blockers.
-Tradeoff: occasional false positives need explicit triage.
+## 3) API-first access to run outputs
+I exposed results through API routes so tooling and dashboards stay decoupled from pipeline internals.
+Tradeoff: schema evolution needs discipline.
 
-## 4) Keep docs operational, not aspirational
-I removed speculative roadmap language and kept runbooks tied to real workflows.
-Tradeoff: less marketing-style presentation, more technical specificity.
+## 4) Scheduler + manual run paths
+Both are supported so production runs are automated but debugging remains fast.
+Tradeoff: two invocation paths to maintain.
 
-## 5) Bias for deterministic behavior in core flows
-I favor explicit defaults, bounded retries, and clear failure paths.
-Tradeoff: slightly more boilerplate in control logic.
+## 5) Security-safe operations docs
+I removed machine-local paths and literal credentials from docs after incident response.
+Tradeoff: onboarding requires secret-manager familiarity.

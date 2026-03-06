@@ -1,6 +1,6 @@
-# Known Limitations
+# Known Limitations (AI Domain Discovery)
 
-- Some workflows still depend on external providers and can fail due to transient upstream outages.
-- Local environment setup is not fully one-command across all OS variants.
-- Observability is mostly log-driven; deeper metrics/alerting can be expanded.
-- Security scanning currently focuses on committed content; runtime misconfiguration checks can be improved.
+- Source quality is uneven; rare legitimate launches can be dropped by strict early filters.
+- External source and network instability can reduce daily coverage.
+- Scoring weights are static and need periodic recalibration against outcomes.
+- Observability is mostly log-driven; richer metrics/alerts would improve operations.
