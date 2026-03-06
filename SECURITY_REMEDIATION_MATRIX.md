@@ -15,7 +15,7 @@ Scope: `AndrewGreenbaum` account scan (pattern-based)
 
 ```bash
 # post-rewrite checks
-rg -n "sk-ant-api03-|AI KEY\.pem|/home/umichleg/Downloads|BEGIN .*PRIVATE KEY|AKIA|ghp_"
-git log --all -S "sk-ant-api03-" --oneline
-git grep -n "sk-ant-api03-" $(git rev-list --all)
+rg -n "SENSITIVE_PATTERN_SET"
+git log --all -S "REDACTED_PATTERN" --oneline
+git grep -n "REDACTED_PATTERN" $(git rev-list --all)
 ```
